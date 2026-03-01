@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { MessageCircle, Menu, X } from "lucide-react"
 
@@ -8,50 +8,60 @@ const WA_URL = "https://wa.me/34711267223?text=Hola%2C%20me%20interesa%20instala
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/40">
-      <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-14 lg:h-16">
-        <Link href="/" className="flex items-center gap-1">
-          <span className="text-xl lg:text-2xl font-serif italic text-foreground tracking-tight">aero.</span>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"}`}>
+      <nav className="max-w-5xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16 lg:h-20">
+        <Link href="/" className="flex items-center">
+          <span className="text-xl font-serif text-[#111] tracking-tight">aero.</span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-10 text-[13px] tracking-wide font-sans">
-          <Link href="#servicios" className="text-muted-foreground hover:text-foreground transition-colors">Servicios</Link>
-          <Link href="#proceso" className="text-muted-foreground hover:text-foreground transition-colors">Proceso</Link>
-          <Link href="#opiniones" className="text-muted-foreground hover:text-foreground transition-colors">Opiniones</Link>
-          <Link href="#faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
+        <div className="hidden lg:flex items-center gap-8 text-sm">
+          <Link href="#como-funciona" className="text-[#111]/60 hover:text-[#111] transition-colors">Cómo funciona</Link>
+          <Link href="#servicios" className="text-[#111]/60 hover:text-[#111] transition-colors">Soluciones</Link>
+          <Link href="#casos" className="text-[#111]/60 hover:text-[#111] transition-colors">Casos</Link>
+          <Link href="#faq" className="text-[#111]/60 hover:text-[#111] transition-colors">FAQ</Link>
         </div>
 
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden lg:flex items-center">
           <a
             href={WA_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-foreground text-background text-[13px] px-5 py-2 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2 bg-[#111] hover:bg-[#333] text-white text-sm px-5 py-2.5 transition-colors"
           >
-            <MessageCircle className="w-3.5 h-3.5" />
-            Pedir presupuesto
+            <MessageCircle className="w-4 h-4" />
+            Presupuesto
           </a>
         </div>
 
-        <button onClick={() => setOpen(!open)} className="lg:hidden p-2 -mr-2">
+        <button onClick={() => setOpen(!open)} className="lg:hidden p-2 -mr-2 text-[#111]">
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </nav>
 
       {open && (
-        <div className="lg:hidden border-t border-border bg-background px-6 py-6 space-y-4">
-          <Link href="#servicios" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground">Servicios</Link>
-          <Link href="#proceso" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground">Proceso</Link>
-          <Link href="#opiniones" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground">Opiniones</Link>
-          <Link href="#faq" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground">FAQ</Link>
-          <hr className="border-border" />
-          <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm">
-            <MessageCircle className="w-4 h-4" /> WhatsApp
-          </a>
-          <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="block text-center bg-foreground text-background text-sm px-6 py-3">
-            Pedir presupuesto
+        <div className="lg:hidden bg-white border-t border-[#111]/10 px-6 py-6 space-y-4">
+          <Link href="#como-funciona" onClick={() => setOpen(false)} className="block text-[#111]/70">Cómo funciona</Link>
+          <Link href="#servicios" onClick={() => setOpen(false)} className="block text-[#111]/70">Soluciones</Link>
+          <Link href="#casos" onClick={() => setOpen(false)} className="block text-[#111]/70">Casos</Link>
+          <Link href="#faq" onClick={() => setOpen(false)} className="block text-[#111]/70">FAQ</Link>
+          <hr className="border-[#111]/10" />
+          <a 
+            href={WA_URL} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center justify-center gap-2 bg-[#111] text-white px-6 py-3"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Presupuesto
           </a>
         </div>
       )}

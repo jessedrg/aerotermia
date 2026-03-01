@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
-import { Inter, Cormorant_Garamond } from "next/font/google"
+import { Inter, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import WhatsAppButton from "@/components/whatsapp-button"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" })
-const cormorant = Cormorant_Garamond({ subsets: ["latin"], variable: "--font-serif", weight: ["300", "400", "500", "600"], display: "swap" })
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif", weight: ["400", "500", "600", "700"], display: "swap" })
 
 export const metadata: Metadata = {
   title: "aero. — Aerotermia en España",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="es" className={`${inter.variable} ${playfair.variable}`}>
       <body>
         {children}
         <WhatsAppButton />

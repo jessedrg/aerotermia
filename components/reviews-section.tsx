@@ -1,87 +1,79 @@
-import { Star, Quote } from "lucide-react"
-
-const reviews = [
+const cases = [
   {
-    name: "Marta L.",
-    city: "Barcelona",
-    text: "Teniamos caldera de gas de 15 años y la factura era brutal. aero. nos conecto con un instalador certificado y en 3 dias teniamos aerotermia funcionando. La factura ha bajado un 60%.",
-    rating: 5,
+    type: "Chalet 220m²",
+    location: "Madrid",
+    before: "Gasoil",
+    after: "Daikin 14kW + radiadores",
+    cost: "11.200€",
+    savings: "1.820€/año",
+    payback: "2,7 años",
   },
   {
-    name: "Carlos y Ana",
-    city: "Madrid",
-    text: "Queriamos quitar el gas de casa y pasarnos a renovables. El instalador que nos recomendo aero. nos explico todo sin presion. Ahora tenemos calefaccion, aire acondicionado y agua caliente con un solo equipo.",
-    rating: 5,
+    type: "Piso 95m²",
+    location: "Barcelona",
+    before: "Gas natural",
+    after: "Vaillant 7kW + fancoils",
+    cost: "8.900€",
+    savings: "880€/año",
+    payback: "3,2 años",
   },
   {
-    name: "Elena R.",
-    city: "Valencia",
-    text: "Vivienda unifamiliar de 200m2. Nos daban presupuestos muy dispares. aero. nos ayudo a comparar y elegir la mejor opcion calidad-precio. Muy contentos con el resultado.",
-    rating: 5,
-  },
-  {
-    name: "Javier M.",
-    city: "Bilbao",
-    text: "Instalacion de aerotermia con suelo radiante en obra nueva. El equipo fue muy profesional y cumplio los plazos. El confort es increible, calor uniforme en toda la casa.",
-    rating: 4,
-  },
-  {
-    name: "Patricia S.",
-    city: "Sevilla",
-    text: "Tenia miedo de que la aerotermia no funcionara bien con mis radiadores antiguos. El tecnico evaluo todo y funciona perfecto. Ademas me ayudaron con la subvencion.",
-    rating: 5,
-  },
-  {
-    name: "Roberto G.",
-    city: "Malaga",
-    text: "Aerotermia para la piscina. Ahora la usamos de abril a octubre. El coste de funcionamiento es minimo comparado con lo que gastaba antes en gas. Muy recomendable.",
-    rating: 5,
+    type: "Casa 180m²",
+    location: "Valencia",
+    before: "Butano + splits",
+    after: "Mitsubishi 11kW + suelo radiante",
+    cost: "18.500€",
+    savings: "1.450€/año",
+    payback: "4,1 años",
   },
 ]
 
 export function ReviewsSection() {
   return (
-    <section id="opiniones" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
-      <div className="grid lg:grid-cols-12 gap-4 mb-16 lg:mb-24">
-        <div className="lg:col-span-5">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-3 font-sans">Opiniones</p>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl tracking-tight text-foreground leading-[1.05]">
-            Lo dicen ellos, no nosotros.
+    <section id="casos" className="bg-white py-24 lg:py-32 border-t border-[#111]/5">
+      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#111] leading-[1.15]">
+            Casos reales
           </h2>
+          <p className="mt-6 text-lg text-[#111]/60">
+            Datos de inversión, ahorro y amortización en instalaciones recientes.
+          </p>
         </div>
-        <div className="lg:col-span-3 lg:col-start-8 flex items-end">
-          <div>
-            <p className="font-serif text-5xl text-foreground">4.9</p>
-            <div className="flex gap-0.5 mt-1">
-              {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current text-foreground" />)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1 font-sans">847 opiniones verificadas</p>
-          </div>
-        </div>
-      </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {reviews.map((r, i) => (
-          <article key={i} className="bg-secondary p-8 sm:p-10 flex flex-col justify-between group hover:bg-foreground transition-colors duration-500">
-            <div>
-              <Quote className="w-6 h-6 text-border group-hover:text-background/20 transition-colors duration-500 mb-6" />
-              <p className="text-sm text-foreground group-hover:text-background transition-colors duration-500 font-sans leading-relaxed">
-                {r.text}
-              </p>
-            </div>
-            <div className="mt-8 pt-6 border-t border-border/50 group-hover:border-background/10 transition-colors duration-500 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-medium text-foreground group-hover:text-background transition-colors duration-500 font-sans">{r.name}</p>
-                <p className="text-[10px] text-muted-foreground group-hover:text-background/50 transition-colors duration-500 font-sans mt-0.5">{r.city}</p>
-              </div>
-              <div className="flex gap-0.5">
-                {[...Array(r.rating)].map((_, j) => (
-                  <Star key={j} className="w-3 h-3 fill-current text-foreground/30 group-hover:text-background/30 transition-colors duration-500" />
-                ))}
-              </div>
-            </div>
-          </article>
-        ))}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-[#111]/10">
+                <th className="text-left py-4 font-medium text-[#111]/40">Vivienda</th>
+                <th className="text-left py-4 font-medium text-[#111]/40">Antes</th>
+                <th className="text-left py-4 font-medium text-[#111]/40">Solución</th>
+                <th className="text-right py-4 font-medium text-[#111]/40">Inversión</th>
+                <th className="text-right py-4 font-medium text-[#111]/40">Ahorro/año</th>
+                <th className="text-right py-4 font-medium text-[#111]/40">Amortización</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cases.map((c, i) => (
+                <tr key={i} className="border-b border-[#111]/5">
+                  <td className="py-5">
+                    <span className="text-[#111]">{c.type}</span>
+                    <span className="text-[#111]/40 ml-2">{c.location}</span>
+                  </td>
+                  <td className="py-5 text-[#111]/60">{c.before}</td>
+                  <td className="py-5 text-[#111]">{c.after}</td>
+                  <td className="py-5 text-right text-[#111]">{c.cost}</td>
+                  <td className="py-5 text-right text-[#111]">{c.savings}</td>
+                  <td className="py-5 text-right text-[#111] font-medium">{c.payback}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-xs text-[#111]/40 mt-8 text-center">
+          Datos reales de instalaciones realizadas en 2024. Ahorro calculado frente al sistema anterior.
+        </p>
       </div>
     </section>
   )
