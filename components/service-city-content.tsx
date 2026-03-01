@@ -391,7 +391,7 @@ export function ServiceCityContent({
         "@context": "https://schema.org", "@type": "LocalBusiness",
         name: `aero. - ${pageTitle}`,
         description: `Los mejores profesionales de ${serviceName.singular} en ${cityName}. Presupuestos gratis.`,
-         url: `https://www.aerotermiaespana.com/${serviceId}/${citySlug}/`,
+         url: `https://aerotermiaesp.com/${serviceId}/${citySlug}/`,
         address: { "@type": "PostalAddress", addressLocality: cityName, addressCountry: "ES" },
         aggregateRating: { "@type": "AggregateRating", ratingValue: avgRating, reviewCount: reviews.length, bestRating: "5", worstRating: "1" },
       })}} />

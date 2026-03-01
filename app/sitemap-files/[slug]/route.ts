@@ -1,6 +1,6 @@
 import { VALID_SERVICES, MODIFIERS, CITIES, PROBLEMS, type Service } from "@/lib/sitemap-data"
 
-const BASE = "https://aerotermiaespana.com"
+const BASE = "https://aerotermiaesp.com"
 
 function buildUrlEntry(loc: string) {
   return `<url><loc>${loc}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`

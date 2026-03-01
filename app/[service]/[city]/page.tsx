@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${fullTitle} | Instaladores Certificados | aero.`,
     description: `${serviceName.title}${modifierText.toLowerCase()} en ${cityName}. Instaladores certificados. Presupuesto GRATIS. Contacta por WhatsApp.`,
-    alternates: { canonical: `https://aerotermiaespana.com/${rawService}/${citySlug}/` },
+    alternates: { canonical: `https://aerotermiaesp.com/${rawService}/${citySlug}/` },
     openGraph: { title: fullTitle, description: `Instalación de ${serviceName.singular} en ${cityName}. Presupuestos gratis.`, type: "website", siteName: "aero." },
   }
 }

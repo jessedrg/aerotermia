@@ -208,7 +208,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${serviceInfo.title} en España | Instaladores Certificados | aero.`,
     description: `${serviceInfo.description} Servicio en toda España. Presupuestos gratis.`,
-    alternates: { canonical: `https://aerotermiaespana.com/${serviceId}/` },
+    alternates: { canonical: `https://aerotermiaesp.com/${serviceId}/` },
     openGraph: { title: `${serviceInfo.title} en España`, description: serviceInfo.description, type: "website", siteName: "aero." },
   }
 }

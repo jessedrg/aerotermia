@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: [
-      "https://aerotermiaespana.com/sitemap-v2.xml",
+      "https://aerotermiaesp.com/sitemap-v2.xml",
     ],
   }
 }
