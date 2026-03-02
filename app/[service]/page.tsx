@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { VALID_SERVICES, type Service } from "@/lib/sitemap-data"
-import { MessageCircle, ArrowRight, MapPin } from "lucide-react"
+import { MessageCircle, ArrowRight, MapPin, Phone, Zap, Thermometer, Leaf, PiggyBank, Award, CheckCircle } from "lucide-react"
 
 export const dynamicParams = true
 export const revalidate = 604800
@@ -169,17 +169,67 @@ const SERVICE_INFO: Record<Service, ServiceInfo> = {
   },
 }
 
-const SERVICE_IMAGES: Record<string, string> = {
-  "aerotermia": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop",
-  "bomba-calor": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?q=80&w=2070&auto=format&fit=crop",
-  "aerotermia-radiadores": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?q=80&w=2070&auto=format&fit=crop",
-  "aerotermia-suelo-radiante": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop",
-  "aerotermia-acs": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2070&auto=format&fit=crop",
-  "aerotermia-piscina": "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=2070&auto=format&fit=crop",
-  "instalacion-aerotermia": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop",
-  "mantenimiento-aerotermia": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop",
-  "aerotermia-vivienda-unifamiliar": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2070&auto=format&fit=crop",
-  "aerotermia-piso": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2080&auto=format&fit=crop",
+const SERVICE_VALUE_PROPS: Record<string, { icon: typeof Zap; title: string; desc: string }[]> = {
+  "aerotermia": [
+    { icon: PiggyBank, title: "Ahorra hasta 70%", desc: "En tu factura de calefacción respecto al gas o gasóleo" },
+    { icon: Leaf, title: "100% renovable", desc: "El 75% de la energía la extrae gratis del aire exterior" },
+    { icon: Thermometer, title: "3 en 1", desc: "Calefacción, refrigeración y agua caliente en un solo equipo" },
+    { icon: Award, title: "Subvenciones", desc: "Hasta 40% de ayudas disponibles según comunidad autónoma" },
+  ],
+  "bomba-calor": [
+    { icon: Zap, title: "COP 3-5", desc: "Por cada kWh eléctrico genera 3-5 kWh térmicos" },
+    { icon: Thermometer, title: "Hasta -20°C", desc: "Funciona incluso con temperaturas extremas" },
+    { icon: PiggyBank, title: "Amortización 5-7 años", desc: "Recupera la inversión con el ahorro en facturas" },
+    { icon: Leaf, title: "Sin combustión", desc: "Cero emisiones directas, sin humos ni olores" },
+  ],
+  "aerotermia-radiadores": [
+    { icon: PiggyBank, title: "Menor inversión", desc: "Aprovecha tus radiadores existentes sin cambiarlos" },
+    { icon: Zap, title: "Instalación rápida", desc: "En 1-2 días tienes el sistema funcionando" },
+    { icon: Thermometer, title: "Alta temperatura", desc: "Bombas de calor que trabajan hasta 65°C" },
+    { icon: Award, title: "Sin obras", desc: "Solo se sustituye la caldera, el circuito se mantiene" },
+  ],
+  "aerotermia-suelo-radiante": [
+    { icon: Thermometer, title: "Máximo confort", desc: "Calor uniforme desde el suelo, sin corrientes" },
+    { icon: Zap, title: "Máxima eficiencia", desc: "El suelo radiante trabaja a 30-35°C, ideal para aerotermia" },
+    { icon: Leaf, title: "Refrescante", desc: "En verano puede enfriar el suelo varios grados" },
+    { icon: Award, title: "Invisible", desc: "Sin radiadores visibles, más espacio útil" },
+  ],
+  "aerotermia-acs": [
+    { icon: PiggyBank, title: "70% menos", desc: "Que un termo eléctrico convencional" },
+    { icon: Thermometer, title: "Agua ilimitada", desc: "Producción continua de agua caliente" },
+    { icon: Zap, title: "Compacto", desc: "Equipos que caben en un armario" },
+    { icon: Leaf, title: "Combinable", desc: "Con calefacción o solo para ACS" },
+  ],
+  "aerotermia-piscina": [
+    { icon: Thermometer, title: "+5 meses", desc: "Alarga la temporada de baño de abril a octubre" },
+    { icon: PiggyBank, title: "Coste mínimo", desc: "Funcionamiento muy económico vs gas o eléctrico" },
+    { icon: Zap, title: "Eficiente", desc: "COP muy alto al trabajar a baja temperatura (26-30°C)" },
+    { icon: Award, title: "Amortización 2-3 años", desc: "Recupera la inversión rápidamente" },
+  ],
+  "instalacion-aerotermia": [
+    { icon: Award, title: "Certificados", desc: "Instaladores autorizados por los fabricantes" },
+    { icon: Zap, title: "Garantía válida", desc: "Solo con instalación profesional" },
+    { icon: Thermometer, title: "Puesta en marcha", desc: "Configuración óptima incluida" },
+    { icon: PiggyBank, title: "Gestión ayudas", desc: "Te ayudamos con las subvenciones" },
+  ],
+  "mantenimiento-aerotermia": [
+    { icon: Zap, title: "Eficiencia óptima", desc: "Mantén el rendimiento del primer día" },
+    { icon: Award, title: "Prevención", desc: "Detecta problemas antes de que sean averías" },
+    { icon: Thermometer, title: "Vida útil", desc: "Prolonga la duración del equipo 5-10 años" },
+    { icon: PiggyBank, title: "Ahorro", desc: "Evita reparaciones costosas" },
+  ],
+  "aerotermia-vivienda-unifamiliar": [
+    { icon: PiggyBank, title: "Mayor ahorro", desc: "Cuanto más grande la casa, más ahorras" },
+    { icon: Thermometer, title: "Zonificación", desc: "Temperatura independiente por plantas" },
+    { icon: Zap, title: "Todo incluido", desc: "Calefacción, ACS, refrigeración y piscina" },
+    { icon: Award, title: "Valor vivienda", desc: "Mejora la certificación energética" },
+  ],
+  "aerotermia-piso": [
+    { icon: Zap, title: "Compacto", desc: "Soluciones diseñadas para espacios reducidos" },
+    { icon: Thermometer, title: "Silencioso", desc: "Unidades exteriores de bajo ruido" },
+    { icon: PiggyBank, title: "Adiós al gas", desc: "Sustituye tu caldera individual" },
+    { icon: Award, title: "Comunidad", desc: "Te ayudamos con los permisos" },
+  ],
 }
 
 const MAIN_CITIES = [
@@ -218,200 +268,206 @@ export default async function ServiceHubPage({ params }: PageProps) {
   if (!VALID_SERVICES.includes(serviceId as Service)) notFound()
 
   const serviceInfo = SERVICE_INFO[serviceId as Service]
-  const heroImg = SERVICE_IMAGES[serviceId] || SERVICE_IMAGES["aerotermia"]
+  const valueProps = SERVICE_VALUE_PROPS[serviceId] || SERVICE_VALUE_PROPS["aerotermia"]
   const relatedServices = VALID_SERVICES.filter(s => s !== serviceId).slice(0, 6)
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
       <main className="flex-1">
-        {/* Hero */}
-        <section className="relative bg-foreground text-background overflow-hidden">
-          <div className="absolute inset-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={heroImg} alt={serviceInfo.title} className="w-full h-full object-cover opacity-30" />
-          </div>
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-28">
-            <nav className="text-[10px] tracking-[0.3em] uppercase text-background/30 mb-8 font-sans flex items-center gap-2">
-              <Link href="/" className="hover:text-background/60 transition-colors">Inicio</Link>
+        {/* Hero - Boutique minimal sin imagen */}
+        <section className="bg-[#fafafa] border-b border-[#111]/5">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
+            <nav className="text-[10px] tracking-[0.3em] uppercase text-[#111]/30 mb-12 font-sans flex items-center gap-2">
+              <Link href="/" className="hover:text-[#111]/60 transition-colors">Inicio</Link>
               <span>/</span>
-              <span className="text-background/60">{serviceInfo.title}</span>
+              <span className="text-[#111]/50">{serviceInfo.title}</span>
             </nav>
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-background leading-[0.95]">
-              {serviceInfo.title}
-              <br />
-              <span className="italic font-light">en toda España</span>
-            </h1>
-            <p className="text-sm sm:text-base text-background/50 mt-8 max-w-xl font-sans leading-relaxed">
-              {serviceInfo.description}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 mt-10">
-              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-background text-foreground px-8 py-4 text-sm font-sans font-medium hover:opacity-90 transition-opacity">
-                <MessageCircle className="w-4 h-4" /> Presupuesto gratis
-              </a>
-              <a href="#ciudades" className="inline-flex items-center justify-center gap-2 border border-background/20 text-background px-8 py-4 text-sm font-sans hover:border-background/50 transition-colors">
-                Ver ciudades <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+
+            <div className="max-w-3xl">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#111] leading-[1.05]">
+                {serviceInfo.title}
+                <br />
+                <span className="italic font-light">en toda España</span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-[#111]/50 mt-8 font-sans leading-relaxed max-w-xl">
+                {serviceInfo.description}
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 mt-10">
+                <a
+                  href={WA_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#111] text-white px-8 py-4 text-sm font-sans font-medium hover:bg-[#333] transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Pedir presupuesto gratis
+                </a>
+                <a
+                  href="tel:+34711267223"
+                  className="inline-flex items-center justify-center gap-2 border border-[#111]/20 text-[#111] px-8 py-4 text-sm font-sans hover:border-[#111]/40 transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  Llamar ahora
+                </a>
+              </div>
+
+              <div className="flex items-center gap-6 mt-10 text-xs text-[#111]/40 font-sans">
+                <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Instaladores certificados</span>
+                <span className="text-[#111]/20">|</span>
+                <span>Presupuesto en 48h</span>
+                <span className="text-[#111]/20">|</span>
+                <span>100% gratuito</span>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Ventajas */}
-        <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32 border-b border-border">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
-            <div className="lg:col-span-4">
-              <p className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-3 font-sans">Ventajas</p>
-              <h2 className="font-serif text-2xl sm:text-4xl tracking-tight text-foreground leading-[1.05]">
-                ¿Por qué elegir {serviceInfo.singular}?
-              </h2>
-              <p className="text-sm text-muted-foreground mt-4 font-sans leading-relaxed">
-                Trabajamos solo con profesionales verificados que garantizan resultados excepcionales.
-              </p>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6">
-              <ul className="grid sm:grid-cols-2 gap-4">
-                {serviceInfo.benefits.map((benefit, i) => (
-                  <li key={i} className="flex items-start gap-3 p-4 bg-secondary/50">
-                    <span className="text-xs text-muted-foreground font-mono mt-0.5">0{i + 1}</span>
-                    <span className="text-sm text-foreground font-sans">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
+        {/* Value Props */}
+        <section className="border-b border-[#111]/5">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-[#111]/30 mb-8 font-sans">Por qué {serviceInfo.singular}</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+              {valueProps.map(({ icon: Icon, title, desc }, i) => (
+                <div key={i} className="space-y-3">
+                  <Icon className="w-5 h-5 text-[#111]" />
+                  <h3 className="text-sm font-sans font-medium text-[#111]">{title}</h3>
+                  <p className="text-xs text-[#111]/50 font-sans leading-relaxed">{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Proceso */}
-        <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32 border-b border-border">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
-            <div className="lg:col-span-4">
-              <p className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-3 font-sans">El proceso</p>
-              <h2 className="font-serif text-2xl sm:text-4xl tracking-tight text-foreground leading-[1.05]">
+        <section className="max-w-5xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+            <div className="lg:col-span-5">
+              <p className="text-[10px] tracking-[0.4em] uppercase text-[#111]/30 mb-4 font-sans">El proceso</p>
+              <h2 className="font-serif text-2xl sm:text-3xl tracking-tight text-[#111] leading-[1.15]">
                 Cómo trabajamos
               </h2>
-              <p className="text-sm text-muted-foreground mt-4 font-sans leading-relaxed">
-                Nuestros profesionales verificados siguen un proceso claro para garantizar tu satisfacción.
+              <p className="text-sm text-[#111]/50 mt-6 font-sans leading-relaxed">
+                Te conectamos con instaladores certificados de tu zona. Sin intermediarios, sin comisiones ocultas.
               </p>
-              <div className="mt-6 p-4 bg-secondary/50">
-                <p className="text-xs text-muted-foreground font-sans">Duración estimada</p>
-                <p className="text-lg font-serif text-foreground mt-1">{serviceInfo.duration}</p>
-                <p className="text-xs text-muted-foreground font-sans mt-3">Garantía</p>
-                <p className="text-lg font-serif text-foreground mt-1">{serviceInfo.guarantee}</p>
+              <div className="mt-8 p-5 bg-[#fafafa] border border-[#111]/5">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-[#111]/30 font-sans">Duración</p>
+                    <p className="text-lg font-serif text-[#111] mt-1">{serviceInfo.duration}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] uppercase tracking-wider text-[#111]/30 font-sans">Garantía</p>
+                    <p className="text-lg font-serif text-[#111] mt-1">{serviceInfo.guarantee}</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="lg:col-span-7 lg:col-start-6">
-              <div className="space-y-6">
-                {serviceInfo.process.map((step, i) => (
-                  <div key={i} className="flex gap-6">
-                    <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background flex items-center justify-center font-serif text-lg">
-                      {i + 1}
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <h3 className="text-base font-sans font-medium text-foreground">{step.step}</h3>
-                      <p className="text-sm text-muted-foreground mt-2 font-sans leading-relaxed">{step.desc}</p>
-                    </div>
+            <div className="lg:col-span-6 lg:col-start-7">
+              {serviceInfo.process.slice(0, 5).map((step, i) => (
+                <div key={i} className={`flex gap-6 py-5 ${i < 4 ? "border-b border-[#111]/5" : ""}`}>
+                  <span className="font-serif text-2xl text-[#111]/10 flex-shrink-0 w-8">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 className="text-sm font-sans font-medium text-[#111]">{step.step}</h3>
+                    <p className="text-xs text-[#111]/50 mt-2 font-sans leading-relaxed">{step.desc}</p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Consejos */}
-        <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32 border-b border-border">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
-            <div className="lg:col-span-4">
-              <p className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-3 font-sans">Consejos</p>
-              <h2 className="font-serif text-2xl sm:text-4xl tracking-tight text-foreground leading-[1.05]">
-                Lo que debes saber
-              </h2>
-              <p className="text-sm text-muted-foreground mt-4 font-sans leading-relaxed">
-                Antes de empezar tu proyecto, ten en cuenta estos consejos de nuestros expertos:
-              </p>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6">
-              <ul className="space-y-4">
-                {serviceInfo.tips.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-4 p-4 border border-border">
-                    <svg className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-sm text-foreground font-sans">{tip}</span>
-                  </li>
-                ))}
-              </ul>
+        <section className="bg-[#fafafa] border-y border-[#111]/5">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-[#111]/30 mb-4 font-sans">Consejos</p>
+            <h2 className="font-serif text-2xl sm:text-3xl tracking-tight text-[#111] mb-10">
+              Lo que debes saber
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {serviceInfo.tips.map((tip, i) => (
+                <div key={i} className="flex items-start gap-4 p-5 bg-white border border-[#111]/5">
+                  <CheckCircle className="w-4 h-4 text-[#111] flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-[#111]/70 font-sans leading-relaxed">{tip}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Ciudades principales */}
-        <section id="ciudades" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
-          <div className="grid lg:grid-cols-12 gap-4 mb-16">
-            <div className="lg:col-span-5">
-              <p className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-3 font-sans">Ciudades</p>
-              <h2 className="font-serif text-3xl sm:text-5xl tracking-tight text-foreground leading-[1.05]">
-                {serviceInfo.title}
-                <br />
-                <span className="italic font-light">cerca de ti</span>
-              </h2>
-            </div>
-            <div className="lg:col-span-5 lg:col-start-8 flex items-end">
-              <p className="text-sm text-muted-foreground font-sans leading-relaxed">
-                Selecciona tu ciudad para ver profesionales verificados en tu zona. Servicio disponible en más de 8.000 localidades.
-              </p>
-            </div>
+        <section id="ciudades" className="max-w-5xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
+          <div className="mb-12">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-[#111]/30 mb-4 font-sans">Ciudades</p>
+            <h2 className="font-serif text-2xl sm:text-3xl tracking-tight text-[#111]">
+              {serviceInfo.title} cerca de ti
+            </h2>
+            <p className="text-sm text-[#111]/50 mt-4 font-sans max-w-lg">
+              Selecciona tu ciudad para ver instaladores certificados en tu zona. Servicio disponible en más de 8.000 localidades.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
             {MAIN_CITIES.map(city => (
               <Link
                 key={city}
                 href={`/${serviceId}/${city}/`}
-                className="group flex items-center gap-2 p-4 border border-border hover:border-foreground/30 hover:bg-secondary transition-all"
+                className="group flex items-center gap-2 p-3 border border-[#111]/5 hover:border-[#111]/20 hover:bg-[#fafafa] transition-all"
               >
-                <MapPin className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0" />
-                <span className="text-sm font-sans text-foreground truncate">{getCityDisplayName(city)}</span>
+                <MapPin className="w-3 h-3 text-[#111]/30 group-hover:text-[#111] transition-colors flex-shrink-0" />
+                <span className="text-xs font-sans text-[#111] truncate">{getCityDisplayName(city)}</span>
               </Link>
             ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <p className="text-sm text-muted-foreground font-sans">
-              ¿No encuentras tu ciudad? <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:no-underline">Escríbenos por WhatsApp</a> y te conectamos con profesionales de tu zona.
+          <div className="mt-10 text-center">
+            <p className="text-sm text-[#111]/50 font-sans">
+              ¿No encuentras tu ciudad? <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="text-[#111] underline underline-offset-4 hover:no-underline">Escríbenos por WhatsApp</a>
             </p>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="bg-foreground">
+        <section className="bg-[#111]">
           <div className="max-w-4xl mx-auto px-6 lg:px-8 py-16 lg:py-24 text-center">
-            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl tracking-tight text-background leading-[1.05]">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-white/30 mb-4 font-sans">Empieza a ahorrar</p>
+            <h2 className="font-serif text-2xl sm:text-4xl tracking-tight text-white leading-[1.1]">
               {serviceInfo.title} profesional
               <br />
               <span className="italic font-light">con garantía</span>
             </h2>
-            <p className="text-sm text-background/50 mt-6 font-sans max-w-md mx-auto">
-              Profesionales verificados. Presupuestos gratis. Resultados garantizados.
+            <p className="text-sm text-white/50 mt-6 font-sans max-w-md mx-auto">
+              Instaladores certificados. Presupuestos gratis. Resultados garantizados.
             </p>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-background text-foreground px-8 py-4 mt-10 text-sm font-sans font-medium hover:opacity-90 transition-opacity">
-              <MessageCircle className="w-4 h-4" /> Contactar ahora
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-10">
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white text-[#111] px-8 py-4 text-sm font-sans font-medium hover:opacity-90 transition-opacity">
+                <MessageCircle className="w-4 h-4" /> Pedir presupuesto
+              </a>
+              <a href="tel:+34711267223" className="inline-flex items-center gap-2 border border-white/20 text-white px-8 py-4 text-sm font-sans hover:border-white/40 transition-colors">
+                <Phone className="w-4 h-4" /> Llamar
+              </a>
+            </div>
           </div>
         </section>
 
         {/* Otros servicios */}
-        <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-3 font-sans">Otros servicios</p>
-          <h2 className="font-serif text-2xl sm:text-4xl tracking-tight text-foreground mb-12">También te puede interesar</h2>
+        <section className="max-w-5xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
+          <p className="text-[10px] tracking-[0.4em] uppercase text-[#111]/30 mb-4 font-sans">Otros servicios</p>
+          <h2 className="font-serif text-2xl sm:text-3xl tracking-tight text-[#111] mb-10">También te puede interesar</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {relatedServices.map(svc => (
               <Link
                 key={svc}
                 href={`/${svc}/`}
-                className="group p-6 border border-border hover:border-foreground/30 hover:bg-secondary transition-all"
+                className="group p-5 border border-[#111]/5 hover:border-[#111]/20 hover:bg-[#fafafa] transition-all"
               >
-                <h3 className="text-sm font-sans font-medium text-foreground group-hover:underline">{SERVICE_INFO[svc as Service]?.title}</h3>
-                <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{SERVICE_INFO[svc as Service]?.description}</p>
+                <h3 className="text-sm font-sans font-medium text-[#111] group-hover:underline">{SERVICE_INFO[svc as Service]?.title}</h3>
+                <p className="text-xs text-[#111]/50 mt-2 line-clamp-2 leading-relaxed">{SERVICE_INFO[svc as Service]?.description}</p>
+                <span className="inline-flex items-center gap-1 text-xs text-[#111]/40 mt-3 font-sans">
+                  Ver más <ArrowRight className="w-3 h-3" />
+                </span>
               </Link>
             ))}
           </div>
